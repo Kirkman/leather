@@ -44,8 +44,14 @@ class Grid(object):
         if not width or not height:
             count = len(self._charts)
 
-            columns = math.ceil(math.sqrt(count))
-            rows = math.ceil(count / columns)
+            # If there are only three charts, display them in a single row
+            if count == 3:
+                columns = 3
+                rows = 1
+            # Otherwise, use ceil/sqrt algorithm to determine col/row count
+            else:
+                columns = math.ceil(math.sqrt(count))
+                rows = math.ceil(count / columns)
 
             width = columns * theme.default_chart_width
             height = rows * theme.default_chart_height
@@ -74,8 +80,16 @@ class Grid(object):
         grid_group = ET.Element('g')
 
         chart_count = len(self._charts)
-        grid_width = math.ceil(math.sqrt(chart_count))
-        grid_height = math.ceil(chart_count / grid_width)
+
+        # If there are only three charts, display them in a single row
+        if chart_count == 3:
+            grid_width = 3
+            grid_height = 1
+        # Otherwise, use ceil/sqrt algorithm to determine col/row count
+        else:
+            grid_width = math.ceil(math.sqrt(chart_count))
+            grid_height = math.ceil(chart_count / grid_width)
+
         chart_width = width / grid_width
         chart_height = height / grid_height
 
